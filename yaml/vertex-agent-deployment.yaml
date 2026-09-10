@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vertex-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vertex-agent
+  template:
+    metadata:
+      labels:
+        app: vertex-agent
+        version: "v-resources-final"
+    spec:
+      serviceAccountName: vertex-agent-ksa
+      imagePullSecrets:
+      - name: final-registry-key
+      containers:
+      - name: vertex-agent
+        image: us-central1-docker.pkg.dev/seir-1-490120/vertex-agent/lab1a:lab1a-latest
+#image: us-central1-docker.pkg.dev/seir-1-490120/vertex-agent/lab1a@sha256:cd4c346a3f7556d508304e34344c22f2e32b5afc377c5235cb3bc47b8a948dd2
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "200m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        env:
+        - name: PROJECT_ID
+          value: "seir-1-490120"
+        - name: LOCATION
+          value: "us-central1"
+        - name: TARGET_DEPLOYMENT
+          value: "broken-app"
+        - name: TARGET_NAMESPACE
+          value: "default"

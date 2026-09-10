@@ -1,0 +1,48 @@
+    gcloud iam service-accounts add-iam-policy-binding \
+      vertex-gke-agent@seir-1-490120.iam.gserviceaccount.com \
+      --role roles/iam.workloadIdentityUser \
+      --member "serviceAccount:seir-1-490120.svc.id.goog[default/vertex-agent-ksa]"
+
+
+          gcloud builds submit \
+      --tag gcr.io/seir-1-490120/vertex-agent:lab1a
+
+      gcloud builds submit \
+  --config /dev/null \
+  --tag gcr.io/seir-1-490120/vertex-agent:lab1a \
+  --substitutions=_DOCKERFILE=dockerfile.txt
+
+ gcloud builds submit \
+          --tag gcr.io/seir-1-490120/vertex-agent:lab1a
+
+  gcloud projects add-iam-policy-binding seir-1-490120 \
+  --member="serviceAccount:760985799835@://gserviceaccount.com" \
+  --role="roles/storage.admin"
+
+gcloud builds submit --tag gcr.io/seir-1-490120/vertex-agent:lab1a
+
+
+
+# Store the project number in a va
+PROJECT_NUMBER=$(gcloud projects describe myproject --format="value(760985799835)")
+
+# Example use case: creating a service account email
+CB_SA="$760985799835@cloudbuild.gserviceaccount.com"
+
+PROJECT_NUMBER=$(gcloud projects describe myproject --format="value(projectNumber)")
+
+
+
+$ gcloud builds submit --tag gcr.io/myproject/vertex-agent:lab1a
+Creating temporary archive of 3 file(s) totalling 2.5 KiB before compression.
+Uploading tarball of [.] to [gs://myproject_cloudbuild/source/1778717219.404318-2ceb03f7585b43e1b1696f30a579b4bf.tgz]
+ERROR: (gcloud.builds.submit) INVALID_ARGUMENT: could not resolve source: googleapi: Error 403: 760985799835-compute@developer.gserviceaccount.com does not have storage.objects.get access to the Google Cloud Storag
+e object. Permission 'storage.objects.get' denied on resource (or it may not exist)., forbidden
+
+
+
+$ gcloud projects add-iam-policy-binding myproject \
+    --member="serviceAccount:760985799835-compute@developer.gserviceaccount.com" \
+    --role="roles/storage.admin"
+ERROR: (gcloud.projects.add-iam-policy-binding) [me@gmail.com] does not have permission to access projects instance [myproject:getIamPolicy] (or it may not exist): The caller does not have permission. Th
+is command is authenticated as me@gmail.com which is the active account specified by the [core/account] property
